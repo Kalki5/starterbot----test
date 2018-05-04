@@ -13,9 +13,9 @@ def download_and_upload(link,title):
     print("Download finished")
     video_name = stream.default_filename
 
-    access_key = 'AKIAIXOQWUO2S7ICURRA'
-    secret_key = 'TtbiBpcQS9bS9rPmOILZC3EcbIExtTriFLeZ8Qrh'
-    region = 'us-east-2'
+    access_key = 'YOUR AWS ACCESS KEY'
+    secret_key = 'YOUR AWS SECRET KEY'
+    region = 'YOUR REGION NAME'
     client = boto3.client(
                 service_name='s3',
                 verify=False,
@@ -25,11 +25,11 @@ def download_and_upload(link,title):
             )
     data = open(video_name, 'rb')
     try:        
-        client.head_object(Key = title, Bucket = 'skaas-dev-test')
+        client.head_object(Key = title, Bucket = 'YOUR BUCKET NAME')
         url = client.generate_presigned_url('get_object', Params = {'Bucket':'skaas-dev-test', 'Key':title})
         return url
     except:
-        client.put_object(Key = title, Body=data, Bucket='skaas-dev-test')
+        client.put_object(Key = title, Body=data, Bucket='YOUR BUCKET NAME')
         url = client.generate_presigned_url('get_object', Params = {'Bucket':'skaas-dev-test', 'Key':title})
         return url
 
