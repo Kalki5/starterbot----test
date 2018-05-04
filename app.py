@@ -8,12 +8,18 @@ from s3_uplod import download_and_upload
 
 app = Flask(__name__)
 
-SLACK_BOT_TOKEN = 'xoxb-356142937491-bHhv6kKbCmXonz6By0nEgv5F'
+SLACK_BOT_TOKEN = 'YOUR SLACKBOT TOKEN'
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 
 
 @app.route('/slack', methods=['POST'])
 def hello_world():
+    '''
+    Return: response 200 
+    Usage: Getting the payload from the slack and extracting the
+    title and link from that it download and upload the video in
+    AWS s3 and return url for the link
+    '''
     form_json = json.loads(request.form["payload"])
     with open("search_result.json",'w') as f:
         f.write(json.dumps(form_json,indent = 2))
@@ -26,22 +32,21 @@ def hello_world():
     link = file['actions'][0]['name'].split(" ")[-1]
     # link = details[1]
     # title = details[0]
-    print (link)
-    print (title)    
+    print(link)
+    print(title)    
     url = download_and_upload(link, title)
-    print (url)
+    print(url)
     postmessage(url)
-    print ("finished")
+    print("Message posted")
     return make_response("", 200)
 def postmessage(link):
 
     slack_client.api_call(
         "chat.postMessage",
-        channel="CAH46FBTQ",
-        text=link,
+        channel = "YOUR CHANNEL NAME",
+        text = link,
         #attachments = attachments_json
         )
-    print ("finished")
 
 if __name__ == "__main__":
     app.run()
