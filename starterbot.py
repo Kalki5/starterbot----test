@@ -107,7 +107,7 @@ def handle_command(command, channel):
     )
 
 # instantiate Slack client
-SLACK_BOT_TOKEN = 'xoxb-356142937491-bHhv6kKbCmXonz6By0nEgv5F'
+SLACK_BOT_TOKEN = 'Slack_secret_token'
 slack_client = SlackClient(SLACK_BOT_TOKEN)
 print (SLACK_BOT_TOKEN)
 print (slack_client)
